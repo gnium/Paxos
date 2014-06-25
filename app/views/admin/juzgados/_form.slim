@@ -1,0 +1,8 @@
+= simple_form_for [:admin, resource], html: { class: "stdform" } do |f|
+  .widget
+    h4.widgettitle Información del juzgado
+    .widgetcontent
+      = f.input :nombre
+      = f.input :piso
+
+      .stdformbutton= render "resource_actions", f: f

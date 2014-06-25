@@ -1,0 +1,16 @@
+= simple_form_for resource, html: { class: "stdform actor-form" } do |f|
+  .widget
+    h4.widgettitle Información del estado de caso
+    .widgetcontent
+      = f.input :nombre, input_html: { class: "input-xxlarge" }
+      = f.input :tipo_actor_id, collection: TipoActor.alfabeticamente, label_method: "nombre", input_html: { class: "input-xxlarge" }
+      = f.input :tipo_documento, collection: ["DNI", "CUIL", "CUIT", "LC", "LE", "PASAPORTE"], input_html: { class: "input-xxlarge" }
+      = f.input :documento, input_html: { class: "input-xxlarge" }
+      = f.input :domicilio, input_html: { class: "input-xxlarge" }
+      = f.input :telefono, input_html: { class: "input-xxlarge" }
+      = f.input :fecha_nacimiento, as: :date, start_year: Date.today.year - 90, input_html: { class: "input-small" }
+      = f.input :estado_civil, collection: ["Casado/a", "Soltero/a", "Viudo/a", "Divorciado/a"]
+      = f.input :casado_con, wrapper_html: { id: "casado-con-field" }, input_html: { class: "input-xxlarge" }
+      = f.input :email, input_html: { class: "input-xxlarge" }
+
+      .stdformbutton= render "resource_actions", f: f

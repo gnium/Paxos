@@ -1,0 +1,20 @@
+= devise_error_messages!
+= simple_form_for resource, as: resource_name, url: invitation_path(resource_name), html: { method: :post, class: "form-vertical" } do |f|
+  p &nbsp;
+  - resource.class.invite_key_fields.each do |field|
+    = f.input field
+  / .control-group
+  /   .controls
+  /     .input-prepend
+  /       span.add-on
+  /         i.icon-user
+  /       = f.text_field :email, placeholder: "Email"
+  /   .control-group
+  /     .controls
+  /       .input-prepend
+  /         span.add-on
+  /           i.icon-lock
+  /         = f.password_field :password, placeholder: "Contraseña"
+  .form-actions
+    span.pull-right
+      = f.button :submit, t("devise.invitations.new.submit_button"), class: "btn btn-inverse"

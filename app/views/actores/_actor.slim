@@ -1,0 +1,8 @@
+tr
+  td= actor.tipo_actor_nombre
+  td= actor.nombre
+  td= actor.documento
+  td= actor.domicilio
+  td= actor.telefono
+  td= actor.email
+  td.actions= render "edit_destroy", row: actor

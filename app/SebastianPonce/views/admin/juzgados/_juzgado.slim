@@ -1,0 +1,7 @@
+tr
+  td= juzgado.nombre
+  td= juzgado.piso
+  td.actions
+    = link_to "Instancias", admin_juzgado_instancias_path(juzgado), class: "btn btn-small btn-info"
+    |  
+    = render "edit_destroy", row: juzgado

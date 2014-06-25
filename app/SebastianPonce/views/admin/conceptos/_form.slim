@@ -1,0 +1,8 @@
+= simple_form_for [:admin, resource], html: { class: "stdform" } do |f|
+  .widget
+    h4.widgettitle Información del concepto
+    .widgetcontent
+      = f.input :nombre
+      = f.input :tipo_concepto_id, collection: TipoConcepto.alfabeticamente, label_method: "nombre"
+
+      .stdformbutton= render "resource_actions", f: f

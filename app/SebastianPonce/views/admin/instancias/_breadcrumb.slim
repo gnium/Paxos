@@ -1,0 +1,8 @@
+ul.breadcrumbs
+  li
+    = link_to "Admin", admin_root_path
+    span.separator
+  li
+    = link_to parent.nombre, edit_admin_juzgado_path(parent)
+    span.separator
+  li= link_to t("#{controller_name}.#{action_name}"), collection_path, class: "current"

@@ -1,0 +1,8 @@
+= render "messages"
+= render "filters"
+.row-fluid
+  .span12
+    h4.widgettitle= render "grid_title"
+    table.table.table-bordered.responsive.dyntable
+      thead= render "header"
+      tbody= render collection

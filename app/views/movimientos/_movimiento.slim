@@ -1,0 +1,7 @@
+tr
+  td= movimiento.actor_nombre
+  td= movimiento.concepto_nombre
+  td= movimiento.fecha
+  td= movimiento.show_importe
+  td= movimiento.descripcion
+  td.actions= render "edit_destroy", row: movimiento

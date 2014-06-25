@@ -1,0 +1,11 @@
+= simple_form_for resource, html: { class: "stdform" } do |f|
+  .widget
+    h4.widgettitle Información del movimiento
+    .widgetcontent
+      = f.input :actor_id, collection: Actor.clientes.alfabeticamente, label_method: "nombre", label: "Cliente", input_html: { class: "chzn-select input-xxlarge" }
+      = f.input :concepto_id, collection: Concepto.alfabeticamente, label_method: "nombre", input_html: { class: "chzn-select input-xxlarge" }
+      = f.input :importe, input_html: { value: resource.show_importe, class: "input-xxlarge" }
+      = f.input :fecha, as: :date, input_html: { class: "input-small" }
+      = f.input :descripcion, input_html: { class: "input-xxlarge" }
+
+      .stdformbutton= render "resource_actions", f: f

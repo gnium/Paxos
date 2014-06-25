@@ -1,0 +1,10 @@
+ul.breadcrumbs
+  - if @current_estudio
+    li
+      = link_to @current_estudio.nombre, root_path
+      span.separator
+  - else
+    li
+      = link_to "Admin", admin_root_path
+      span.separator
+  li= link_to t("#{controller_name}.#{action_name}"), collection_path, class: "current"

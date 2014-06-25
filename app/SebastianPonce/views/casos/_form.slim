@@ -1,0 +1,29 @@
+= simple_nested_form_for resource, html: { class: "stdform" } do |f|
+  .widget
+    h4.widgettitle Información del caso
+    .widgetcontent
+      = f.input :tipo_proceso_id, collection: TipoProceso.alfabeticamente, label_method: "nombre", input_html: { class: "chzn-select input-xxlarge" }
+      = f.input :instancia_id, collection: Instancia.alfabeticamente, label_method: "nombre", input_html: { class: "chzn-select input-xxlarge" }
+      = f.input :caratula, input_html: { class: "input-xxlarge" }
+      = f.input :observacion, input_html: { class: "input-xxlarge" }
+      = f.input :numero_carpeta, input_html: { class: "input-xxlarge" }
+      = f.input :numero_archivo, input_html: { class: "input-xxlarge" }
+
+  .widget
+    h4.widgettitle Fechas
+    .widgetcontent
+      = f.input :fecha_inicio, as: :date, input_html: { class: "input-small" }
+      = f.input :fecha_fin, as: :date, input_html: { class: "input-small" }
+
+  .widget
+    h4.widgettitle Actores
+    .widgetcontent
+      = f.fields_for :caso_actores do |caso_actor_form|
+        .control-group
+          = caso_actor_form.label :actor_id, "Actor", class: "control-label"
+          .controls
+            = caso_actor_form.select :actor_id, actores_for_select, {}, { class: "chzn-select input-xxlarge" }
+            = caso_actor_form.link_to_remove "Eliminar"
+      = f.link_to_add "Agregar actor", :caso_actores, class: "btn btn-info"
+
+  .stdformbutton= render "resource_actions", f: f

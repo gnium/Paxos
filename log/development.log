@@ -1,0 +1,511 @@
+Connecting to database specified by database.yml
+  [1m[36m (14.0ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (1.9ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) 
+  [1m[36m (1.3ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35m (91.8ms)[0m  SELECT "schema_migrations"."version" FROM "schema_migrations" 
+Migrating to DeviseCreateAdmins (20130324004156)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  CREATE TABLE "admins" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255) DEFAULT '' NOT NULL, "encrypted_password" varchar(255) DEFAULT '' NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.7ms)[0m  [1mCREATE UNIQUE INDEX "index_admins_on_email" ON "admins" ("email")[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130324004156')
+  [1m[36m (1.6ms)[0m  [1mcommit transaction[0m
+Migrating to CreateEstudios (20130430050614)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.6ms)[0m  [1mCREATE TABLE "estudios" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "nombre" varchar(255), "telefono" varchar(255), "domicilio" varchar(255), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130430050614')
+  [1m[36m (1.1ms)[0m  [1mcommit transaction[0m
+Migrating to CreateActores (20130430050628)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.6ms)[0m  [1mCREATE TABLE "actores" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "estudio_id" integer, "nombre" varchar(255), "tipo" varchar(255), "tipo_documento" varchar(255), "documento" varchar(255), "domicilio" varchar(255), "telefono" varchar(255), "fecha_nacimiento" date, "estado_civil" varchar(255), "casado_con" varchar(255), "email" varchar(255), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.2ms)[0m  CREATE INDEX "index_actores_on_estudio_id" ON "actores" ("estudio_id")
+  [1m[36m (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130430050628')[0m
+  [1m[35m (1.4ms)[0m  commit transaction
+Migrating to CreateCasos (20130430050642)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.6ms)[0m  CREATE TABLE "casos" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "estudio_id" integer, "tipo_proceso_id" integer, "user_id" integer, "instancia_id" integer, "caratula" varchar(255), "observacion" text, "numero_carpeta" varchar(255), "fecha_inicio" date, "fecha_fin" date, "numero_archivo" varchar(255), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.1ms)[0m  [1mCREATE INDEX "index_casos_on_estudio_id" ON "casos" ("estudio_id")[0m
+  [1m[35m (0.1ms)[0m  CREATE INDEX "index_casos_on_tipo_proceso_id" ON "casos" ("tipo_proceso_id")
+  [1m[36m (0.1ms)[0m  [1mCREATE INDEX "index_casos_on_user_id" ON "casos" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  CREATE INDEX "index_casos_on_instancia_id" ON "casos" ("instancia_id")
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130430050642')[0m
+  [1m[35m (1.7ms)[0m  commit transaction
+Migrating to CreateConsultas (20130430050657)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.7ms)[0m  CREATE TABLE "consultas" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "caso_id" integer, "estudio_id" integer, "fecha" date, "titulo" varchar(255), "descripcion" text, "fecha_presentacion" date, "con_vencimiento" boolean DEFAULT 'f', "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.2ms)[0m  [1mCREATE INDEX "index_consultas_on_caso_id" ON "consultas" ("caso_id")[0m
+  [1m[35m (0.2ms)[0m  CREATE INDEX "index_consultas_on_estudio_id" ON "consultas" ("estudio_id")
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130430050657')[0m
+  [1m[35m (1.4ms)[0m  commit transaction
+Migrating to CreateAbogados (20130430050737)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.6ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255) DEFAULT '' NOT NULL, "encrypted_password" varchar(255) DEFAULT '' NOT NULL, "reset_password_token" varchar(255), "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar(255), "last_sign_in_ip" varchar(255), "estudio_id" integer, "nombre" varchar(255), "apellido" varchar(255), "telefono" varchar(255), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.5ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.2ms)[0m  CREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")
+  [1m[36m (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130430050737')[0m
+  [1m[35m (1.5ms)[0m  commit transaction
+Migrating to CreateJuzgados (20130430050752)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  CREATE TABLE "juzgados" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "nombre" varchar(255), "position" integer DEFAULT 0, "piso" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.3ms)[0m  [1mCREATE INDEX "index_juzgados_on_position" ON "juzgados" ("position")[0m
+  [1m[35m (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130430050752')
+  [1m[36m (1.8ms)[0m  [1mcommit transaction[0m
+Migrating to CreateTipoProcesos (20130430050808)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.5ms)[0m  [1mCREATE TABLE "tipo_procesos" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "nombre" varchar(255), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130430050808')
+  [1m[36m (1.5ms)[0m  [1mcommit transaction[0m
+Migrating to CreateCasoEstados (20130430050823)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.5ms)[0m  [1mCREATE TABLE "caso_estados" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "nombre" varchar(255), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130430050823')
+  [1m[36m (1.4ms)[0m  [1mcommit transaction[0m
+Migrating to CreateInstancias (20130430050838)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.5ms)[0m  [1mCREATE TABLE "instancias" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "juzgado_id" integer, "nombre" varchar(255), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130430050838')
+  [1m[36m (1.7ms)[0m  [1mcommit transaction[0m
+Migrating to CreateFeriados (20130430050855)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.8ms)[0m  [1mCREATE TABLE "feriados" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "fecha" date, "nombre" varchar(255), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130430050855')
+  [1m[36m (1.4ms)[0m  [1mcommit transaction[0m
+Migrating to CreateDocumentos (20130430050914)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.6ms)[0m  [1mCREATE TABLE "documentos" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "estudio_id" integer, "user_id" integer, "actor_id" integer, "descripcion" varchar(255), "fecha_entrega" date, "fecha_devolucion" date, "ubicacion_fisica" varchar(255), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.2ms)[0m  CREATE INDEX "index_documentos_on_estudio_id" ON "documentos" ("estudio_id")
+  [1m[36m (0.2ms)[0m  [1mCREATE INDEX "index_documentos_on_user_id" ON "documentos" ("user_id")[0m
+  [1m[35m (0.2ms)[0m  CREATE INDEX "index_documentos_on_actor_id" ON "documentos" ("actor_id")
+  [1m[36m (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130430050914')[0m
+  [1m[35m (1.5ms)[0m  commit transaction
+Migrating to CreateConceptos (20130430051000)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  CREATE TABLE "conceptos" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "tipo_concepto_id" integer, "nombre" varchar(255), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.2ms)[0m  [1mCREATE INDEX "index_conceptos_on_tipo_concepto_id" ON "conceptos" ("tipo_concepto_id")[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130430051000')
+  [1m[36m (1.8ms)[0m  [1mcommit transaction[0m
+Migrating to CreateMovimientos (20130430051635)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.5ms)[0m  [1mCREATE TABLE "movimientos" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "estudio_id" integer, "user_id" integer, "actor_id" integer, "concepto_id" integer, "fecha" date, "importe" integer, "descripcion" text, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  CREATE INDEX "index_movimientos_on_estudio_id" ON "movimientos" ("estudio_id")
+  [1m[36m (0.1ms)[0m  [1mCREATE INDEX "index_movimientos_on_user_id" ON "movimientos" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  CREATE INDEX "index_movimientos_on_actor_id" ON "movimientos" ("actor_id")
+  [1m[36m (0.1ms)[0m  [1mCREATE INDEX "index_movimientos_on_concepto_id" ON "movimientos" ("concepto_id")[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130430051635')
+  [1m[36m (2.0ms)[0m  [1mcommit transaction[0m
+Migrating to CreateTipoConceptos (20130430051653)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.4ms)[0m  [1mCREATE TABLE "tipo_conceptos" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "nombre" varchar(255), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130430051653')
+  [1m[36m (1.7ms)[0m  [1mcommit transaction[0m
+Migrating to CreateTipoActores (20130506014446)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.5ms)[0m  [1mCREATE TABLE "tipo_actores" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "nombre" varchar(255), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130506014446')
+  [1m[36m (1.7ms)[0m  [1mcommit transaction[0m
+Migrating to AddTipoActorIdToActores (20130506014552)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (27.0ms)[0m  [1mALTER TABLE "actores" ADD "tipo_actor_id" integer[0m
+  [1m[35m (0.2ms)[0m  CREATE INDEX "index_actores_on_tipo_actor_id" ON "actores" ("tipo_actor_id")
+  [1m[36m (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130506014552')[0m
+  [1m[35m (2.0ms)[0m  commit transaction
+Migrating to DeviseInvitableAddToUsers (20130621233944)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  ALTER TABLE "users" ADD "invitation_token" varchar(60)
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "users" ADD "invitation_sent_at" datetime[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "users" ADD "invitation_accepted_at" datetime
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "users" ADD "invitation_limit" integer[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "users" ADD "invited_by_id" integer
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "users" ADD "invited_by_type" varchar(255)[0m
+  [1m[35m (0.4ms)[0m  CREATE UNIQUE INDEX "index_users_on_invitation_token" ON "users" ("invitation_token")
+  [1m[36m (0.2ms)[0m  [1mCREATE INDEX "index_users_on_invited_by_id" ON "users" ("invited_by_id")[0m
+  [1m[35m (0.7ms)[0m  CREATE TEMPORARY TABLE "altered_users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255) DEFAULT '' NOT NULL, "encrypted_password" varchar(255) DEFAULT '' NOT NULL, "reset_password_token" varchar(255), "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar(255), "last_sign_in_ip" varchar(255), "estudio_id" integer, "nombre" varchar(255), "apellido" varchar(255), "telefono" varchar(255), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "invitation_token" varchar(60), "invitation_sent_at" datetime, "invitation_accepted_at" datetime, "invitation_limit" integer, "invited_by_id" integer, "invited_by_type" varchar(255)) 
+  [1m[36m (0.1ms)[0m  [1mCREATE INDEX "temp_index_altered_users_on_invited_by_id" ON "altered_users" ("invited_by_id")[0m
+  [1m[35m (0.4ms)[0m  CREATE UNIQUE INDEX "temp_index_altered_users_on_invitation_token" ON "altered_users" ("invitation_token")
+  [1m[36m (0.1ms)[0m  [1mCREATE UNIQUE INDEX "temp_index_altered_users_on_reset_password_token" ON "altered_users" ("reset_password_token")[0m
+  [1m[35m (0.1ms)[0m  CREATE UNIQUE INDEX "temp_index_altered_users_on_email" ON "altered_users" ("email")
+  [1m[36m (0.1ms)[0m  [1mSELECT * FROM "users"[0m
+  [1m[35m (0.7ms)[0m  DROP TABLE "users"
+  [1m[36m (0.3ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255) DEFAULT '' NOT NULL, "encrypted_password" varchar(255) DEFAULT '', "reset_password_token" varchar(255), "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar(255), "last_sign_in_ip" varchar(255), "estudio_id" integer, "nombre" varchar(255), "apellido" varchar(255), "telefono" varchar(255), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "invitation_token" varchar(60), "invitation_sent_at" datetime, "invitation_accepted_at" datetime, "invitation_limit" integer, "invited_by_id" integer, "invited_by_type" varchar(255)) [0m
+  [1m[35m (0.2ms)[0m  CREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")
+  [1m[36m (0.1ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[35m (0.2ms)[0m  CREATE UNIQUE INDEX "index_users_on_invitation_token" ON "users" ("invitation_token")
+  [1m[36m (0.1ms)[0m  [1mCREATE INDEX "index_users_on_invited_by_id" ON "users" ("invited_by_id")[0m
+  [1m[35m (0.1ms)[0m  SELECT * FROM "altered_users"
+  [1m[36m (0.3ms)[0m  [1mDROP TABLE "altered_users"[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130621233944')
+  [1m[36m (2.6ms)[0m  [1mcommit transaction[0m
+Migrating to CreateCasoActores (20130622184805)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.5ms)[0m  [1mCREATE TABLE "caso_actores" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "caso_id" integer, "actor_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.2ms)[0m  CREATE INDEX "index_caso_actores_on_caso_id" ON "caso_actores" ("caso_id")
+  [1m[36m (0.1ms)[0m  [1mCREATE INDEX "index_caso_actores_on_actor_id" ON "caso_actores" ("actor_id")[0m
+  [1m[35m (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130622184805')
+  [1m[36m (3.4ms)[0m  [1mcommit transaction[0m
+Migrating to RemoveActorIdToCasos (20130622185207)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.3ms)[0m  [1mCREATE TEMPORARY TABLE "altered_casos" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "estudio_id" integer, "tipo_proceso_id" integer, "user_id" integer, "instancia_id" integer, "caratula" varchar(255), "observacion" text, "numero_carpeta" varchar(255), "fecha_inicio" date, "fecha_fin" date, "numero_archivo" varchar(255), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  CREATE INDEX "temp_index_altered_casos_on_instancia_id" ON "altered_casos" ("instancia_id")
+  [1m[36m (0.1ms)[0m  [1mCREATE INDEX "temp_index_altered_casos_on_user_id" ON "altered_casos" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  CREATE INDEX "temp_index_altered_casos_on_tipo_proceso_id" ON "altered_casos" ("tipo_proceso_id")
+  [1m[36m (0.1ms)[0m  [1mCREATE INDEX "temp_index_altered_casos_on_estudio_id" ON "altered_casos" ("estudio_id")[0m
+  [1m[35m (0.1ms)[0m  SELECT * FROM "casos"
+  [1m[36m (0.4ms)[0m  [1mDROP TABLE "casos"[0m
+  [1m[35m (0.2ms)[0m  CREATE TABLE "casos" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "estudio_id" integer, "tipo_proceso_id" integer, "user_id" integer, "instancia_id" integer, "caratula" varchar(255), "observacion" text, "numero_carpeta" varchar(255), "fecha_inicio" date, "fecha_fin" date, "numero_archivo" varchar(255), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.1ms)[0m  [1mCREATE INDEX "index_casos_on_estudio_id" ON "casos" ("estudio_id")[0m
+  [1m[35m (0.1ms)[0m  CREATE INDEX "index_casos_on_tipo_proceso_id" ON "casos" ("tipo_proceso_id")
+  [1m[36m (0.1ms)[0m  [1mCREATE INDEX "index_casos_on_user_id" ON "casos" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  CREATE INDEX "index_casos_on_instancia_id" ON "casos" ("instancia_id")
+  [1m[36m (0.1ms)[0m  [1mSELECT * FROM "altered_casos"[0m
+  [1m[35m (0.2ms)[0m  DROP TABLE "altered_casos"
+  [1m[36m (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130622185207')[0m
+  [1m[35m (13.9ms)[0m  commit transaction
+  [1m[36m (0.2ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations" [0m
+Connecting to database specified by database.yml
+  [1m[36m (2.9ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations" [0m
+  [1m[35mAdmin Load (0.2ms)[0m  SELECT "admins".* FROM "admins" WHERE "admins"."email" = 'agustin@paxos.com' LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (21.0ms)[0m  INSERT INTO "admins" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)  [["created_at", Thu, 01 Aug 2013 06:09:04 UTC +00:00], ["email", "agustin@paxos.com"], ["encrypted_password", "$2a$10$Ha858LgodwrJnX979fMCrelb4cYUZ4/clgBvvZpWxAgd4/bYlZbLW"], ["updated_at", Thu, 01 Aug 2013 06:09:04 UTC +00:00]]
+  [1m[36m (1.6ms)[0m  [1mcommit transaction[0m
+  [1m[35mAdmin Load (0.2ms)[0m  SELECT "admins".* FROM "admins" WHERE "admins"."email" = 'sebastian@paxos.com' LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (0.8ms)[0m  INSERT INTO "admins" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)  [["created_at", Thu, 01 Aug 2013 06:09:04 UTC +00:00], ["email", "sebastian@paxos.com"], ["encrypted_password", "$2a$10$odQRlmJ.1kSM.22xaunTnOusrSwX6FMHgVpbtp4PSvfGKephrX996"], ["updated_at", Thu, 01 Aug 2013 06:09:04 UTC +00:00]]
+  [1m[36m (1.8ms)[0m  [1mcommit transaction[0m
+  [1m[35mTipoConcepto Load (0.3ms)[0m  SELECT "tipo_conceptos".* FROM "tipo_conceptos" WHERE "tipo_conceptos"."nombre" = 'Debe' LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mTipoConcepto Exists (0.2ms)[0m  SELECT 1 AS one FROM "tipo_conceptos" WHERE "tipo_conceptos"."nombre" = 'Debe' LIMIT 1
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "tipo_conceptos" ("created_at", "nombre", "updated_at") VALUES (?, ?, ?)[0m  [["created_at", Thu, 01 Aug 2013 06:09:04 UTC +00:00], ["nombre", "Debe"], ["updated_at", Thu, 01 Aug 2013 06:09:04 UTC +00:00]]
+  [1m[35m (1.4ms)[0m  commit transaction
+  [1m[36mTipoConcepto Load (0.2ms)[0m  [1mSELECT "tipo_conceptos".* FROM "tipo_conceptos" WHERE "tipo_conceptos"."nombre" = 'Haber' LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mTipoConcepto Exists (0.1ms)[0m  [1mSELECT 1 AS one FROM "tipo_conceptos" WHERE "tipo_conceptos"."nombre" = 'Haber' LIMIT 1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "tipo_conceptos" ("created_at", "nombre", "updated_at") VALUES (?, ?, ?)  [["created_at", Thu, 01 Aug 2013 06:09:04 UTC +00:00], ["nombre", "Haber"], ["updated_at", Thu, 01 Aug 2013 06:09:04 UTC +00:00]]
+  [1m[36m (1.3ms)[0m  [1mcommit transaction[0m
+  [1m[35mTipoActor Load (0.1ms)[0m  SELECT "tipo_actores".* FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Clientes' LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mTipoActor Exists (0.2ms)[0m  SELECT 1 AS one FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Clientes' LIMIT 1
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "tipo_actores" ("created_at", "nombre", "updated_at") VALUES (?, ?, ?)[0m  [["created_at", Thu, 01 Aug 2013 06:09:04 UTC +00:00], ["nombre", "Clientes"], ["updated_at", Thu, 01 Aug 2013 06:09:04 UTC +00:00]]
+  [1m[35m (1.8ms)[0m  commit transaction
+  [1m[36mTipoActor Load (0.2ms)[0m  [1mSELECT "tipo_actores".* FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Contrarios' LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mTipoActor Exists (0.1ms)[0m  [1mSELECT 1 AS one FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Contrarios' LIMIT 1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "tipo_actores" ("created_at", "nombre", "updated_at") VALUES (?, ?, ?)  [["created_at", Thu, 01 Aug 2013 06:09:04 UTC +00:00], ["nombre", "Contrarios"], ["updated_at", Thu, 01 Aug 2013 06:09:04 UTC +00:00]]
+  [1m[36m (2.5ms)[0m  [1mcommit transaction[0m
+  [1m[35mTipoActor Load (0.2ms)[0m  SELECT "tipo_actores".* FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Procuradores' LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mTipoActor Exists (0.1ms)[0m  SELECT 1 AS one FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Procuradores' LIMIT 1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "tipo_actores" ("created_at", "nombre", "updated_at") VALUES (?, ?, ?)[0m  [["created_at", Thu, 01 Aug 2013 06:09:04 UTC +00:00], ["nombre", "Procuradores"], ["updated_at", Thu, 01 Aug 2013 06:09:04 UTC +00:00]]
+  [1m[35m (2.1ms)[0m  commit transaction
+  [1m[36mTipoActor Load (0.1ms)[0m  [1mSELECT "tipo_actores".* FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Letrados' LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mTipoActor Exists (0.1ms)[0m  [1mSELECT 1 AS one FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Letrados' LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "tipo_actores" ("created_at", "nombre", "updated_at") VALUES (?, ?, ?)  [["created_at", Thu, 01 Aug 2013 06:09:04 UTC +00:00], ["nombre", "Letrados"], ["updated_at", Thu, 01 Aug 2013 06:09:04 UTC +00:00]]
+  [1m[36m (1.5ms)[0m  [1mcommit transaction[0m
+  [1m[35mTipoActor Load (0.1ms)[0m  SELECT "tipo_actores".* FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Letrados Contrarios' LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mTipoActor Exists (0.1ms)[0m  SELECT 1 AS one FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Letrados Contrarios' LIMIT 1
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "tipo_actores" ("created_at", "nombre", "updated_at") VALUES (?, ?, ?)[0m  [["created_at", Thu, 01 Aug 2013 06:09:04 UTC +00:00], ["nombre", "Letrados Contrarios"], ["updated_at", Thu, 01 Aug 2013 06:09:04 UTC +00:00]]
+  [1m[35m (1.7ms)[0m  commit transaction
+  [1m[36mTipoActor Load (0.3ms)[0m  [1mSELECT "tipo_actores".* FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Jueces' LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mTipoActor Exists (0.2ms)[0m  [1mSELECT 1 AS one FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Jueces' LIMIT 1[0m
+  [1m[35mSQL (0.6ms)[0m  INSERT INTO "tipo_actores" ("created_at", "nombre", "updated_at") VALUES (?, ?, ?)  [["created_at", Thu, 01 Aug 2013 06:09:04 UTC +00:00], ["nombre", "Jueces"], ["updated_at", Thu, 01 Aug 2013 06:09:04 UTC +00:00]]
+  [1m[36m (1.4ms)[0m  [1mcommit transaction[0m
+  [1m[35mTipoActor Load (0.2ms)[0m  SELECT "tipo_actores".* FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Secretarios' LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mTipoActor Exists (0.2ms)[0m  SELECT 1 AS one FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Secretarios' LIMIT 1
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "tipo_actores" ("created_at", "nombre", "updated_at") VALUES (?, ?, ?)[0m  [["created_at", Thu, 01 Aug 2013 06:09:04 UTC +00:00], ["nombre", "Secretarios"], ["updated_at", Thu, 01 Aug 2013 06:09:04 UTC +00:00]]
+  [1m[35m (1.4ms)[0m  commit transaction
+  [1m[36mTipoActor Load (0.2ms)[0m  [1mSELECT "tipo_actores".* FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Profesionales' LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mTipoActor Exists (0.1ms)[0m  [1mSELECT 1 AS one FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Profesionales' LIMIT 1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "tipo_actores" ("created_at", "nombre", "updated_at") VALUES (?, ?, ?)  [["created_at", Thu, 01 Aug 2013 06:09:04 UTC +00:00], ["nombre", "Profesionales"], ["updated_at", Thu, 01 Aug 2013 06:09:04 UTC +00:00]]
+  [1m[36m (1.4ms)[0m  [1mcommit transaction[0m
+  [1m[35mTipoActor Load (0.2ms)[0m  SELECT "tipo_actores".* FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Notarios' LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mTipoActor Exists (0.1ms)[0m  SELECT 1 AS one FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Notarios' LIMIT 1
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "tipo_actores" ("created_at", "nombre", "updated_at") VALUES (?, ?, ?)[0m  [["created_at", Thu, 01 Aug 2013 06:09:04 UTC +00:00], ["nombre", "Notarios"], ["updated_at", Thu, 01 Aug 2013 06:09:04 UTC +00:00]]
+  [1m[35m (1.5ms)[0m  commit transaction
+  [1m[36mTipoActor Load (0.1ms)[0m  [1mSELECT "tipo_actores".* FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Procuradores Contrarios' LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mTipoActor Exists (0.1ms)[0m  [1mSELECT 1 AS one FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Procuradores Contrarios' LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "tipo_actores" ("created_at", "nombre", "updated_at") VALUES (?, ?, ?)  [["created_at", Thu, 01 Aug 2013 06:09:05 UTC +00:00], ["nombre", "Procuradores Contrarios"], ["updated_at", Thu, 01 Aug 2013 06:09:05 UTC +00:00]]
+  [1m[36m (1.3ms)[0m  [1mcommit transaction[0m
+  [1m[35mTipoActor Load (0.1ms)[0m  SELECT "tipo_actores".* FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Administrativos' LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mTipoActor Exists (0.1ms)[0m  SELECT 1 AS one FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Administrativos' LIMIT 1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "tipo_actores" ("created_at", "nombre", "updated_at") VALUES (?, ?, ?)[0m  [["created_at", Thu, 01 Aug 2013 06:09:05 UTC +00:00], ["nombre", "Administrativos"], ["updated_at", Thu, 01 Aug 2013 06:09:05 UTC +00:00]]
+  [1m[35m (1.7ms)[0m  commit transaction
+  [1m[36mTipoActor Load (0.1ms)[0m  [1mSELECT "tipo_actores".* FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Organos administrativos' LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mTipoActor Exists (0.1ms)[0m  [1mSELECT 1 AS one FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Organos administrativos' LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "tipo_actores" ("created_at", "nombre", "updated_at") VALUES (?, ?, ?)  [["created_at", Thu, 01 Aug 2013 06:09:05 UTC +00:00], ["nombre", "Organos administrativos"], ["updated_at", Thu, 01 Aug 2013 06:09:05 UTC +00:00]]
+  [1m[36m (1.6ms)[0m  [1mcommit transaction[0m
+  [1m[35mTipoActor Load (0.2ms)[0m  SELECT "tipo_actores".* FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Organos judiciales' LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mTipoActor Exists (0.1ms)[0m  SELECT 1 AS one FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Organos judiciales' LIMIT 1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "tipo_actores" ("created_at", "nombre", "updated_at") VALUES (?, ?, ?)[0m  [["created_at", Thu, 01 Aug 2013 06:09:05 UTC +00:00], ["nombre", "Organos judiciales"], ["updated_at", Thu, 01 Aug 2013 06:09:05 UTC +00:00]]
+  [1m[35m (1.6ms)[0m  commit transaction
+  [1m[36mTipoActor Load (0.1ms)[0m  [1mSELECT "tipo_actores".* FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Testigos' LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mTipoActor Exists (0.1ms)[0m  [1mSELECT 1 AS one FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Testigos' LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "tipo_actores" ("created_at", "nombre", "updated_at") VALUES (?, ?, ?)  [["created_at", Thu, 01 Aug 2013 06:09:05 UTC +00:00], ["nombre", "Testigos"], ["updated_at", Thu, 01 Aug 2013 06:09:05 UTC +00:00]]
+  [1m[36m (1.4ms)[0m  [1mcommit transaction[0m
+  [1m[35mTipoActor Load (0.1ms)[0m  SELECT "tipo_actores".* FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Funcionarios' LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mTipoActor Exists (0.1ms)[0m  SELECT 1 AS one FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Funcionarios' LIMIT 1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "tipo_actores" ("created_at", "nombre", "updated_at") VALUES (?, ?, ?)[0m  [["created_at", Thu, 01 Aug 2013 06:09:05 UTC +00:00], ["nombre", "Funcionarios"], ["updated_at", Thu, 01 Aug 2013 06:09:05 UTC +00:00]]
+  [1m[35m (1.6ms)[0m  commit transaction
+  [1m[36mTipoActor Load (0.1ms)[0m  [1mSELECT "tipo_actores".* FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Peritos' LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mTipoActor Exists (0.1ms)[0m  [1mSELECT 1 AS one FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Peritos' LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "tipo_actores" ("created_at", "nombre", "updated_at") VALUES (?, ?, ?)  [["created_at", Thu, 01 Aug 2013 06:09:05 UTC +00:00], ["nombre", "Peritos"], ["updated_at", Thu, 01 Aug 2013 06:09:05 UTC +00:00]]
+  [1m[36m (1.3ms)[0m  [1mcommit transaction[0m
+  [1m[35mTipoActor Load (0.1ms)[0m  SELECT "tipo_actores".* FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Graduados sociales' LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mTipoActor Exists (0.1ms)[0m  SELECT 1 AS one FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Graduados sociales' LIMIT 1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "tipo_actores" ("created_at", "nombre", "updated_at") VALUES (?, ?, ?)[0m  [["created_at", Thu, 01 Aug 2013 06:09:05 UTC +00:00], ["nombre", "Graduados sociales"], ["updated_at", Thu, 01 Aug 2013 06:09:05 UTC +00:00]]
+  [1m[35m (1.9ms)[0m  commit transaction
+  [1m[36mTipoActor Load (0.1ms)[0m  [1mSELECT "tipo_actores".* FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Proveedores' LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mTipoActor Exists (0.1ms)[0m  [1mSELECT 1 AS one FROM "tipo_actores" WHERE "tipo_actores"."nombre" = 'Proveedores' LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "tipo_actores" ("created_at", "nombre", "updated_at") VALUES (?, ?, ?)  [["created_at", Thu, 01 Aug 2013 06:09:05 UTC +00:00], ["nombre", "Proveedores"], ["updated_at", Thu, 01 Aug 2013 06:09:05 UTC +00:00]]
+  [1m[36m (2.8ms)[0m  [1mcommit transaction[0m
+Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+
+
+Started GET "/admin" for 127.0.0.1 at 2013-08-01 03:16:40 -0300
+Processing by Admin::EstudiosController#index as HTML
+Completed 401 Unauthorized in 31ms
+
+
+Started GET "/admins/sign_in" for 127.0.0.1 at 2013-08-01 03:16:41 -0300
+Processing by Devise::SessionsController#new as HTML
+  Rendered crud/_messages.slim (20.9ms)
+  Rendered devise/sessions/new.html.slim within layouts/session (227.1ms)
+Compiled bootstrap.min.css  (0ms)  (pid 68187)
+Compiled bootstrap-responsive.min.css  (0ms)  (pid 68187)
+Compiled jquery.ui.css  (6ms)  (pid 68187)
+Compiled animate.min.css  (1ms)  (pid 68187)
+Compiled animate.delay.css  (0ms)  (pid 68187)
+Compiled isotope.css  (0ms)  (pid 68187)
+Compiled colorbox.css  (3ms)  (pid 68187)
+Compiled uniform.tp.css  (14ms)  (pid 68187)
+Compiled colorpicker.css  (4ms)  (pid 68187)
+Compiled jquery.jgrowl.css  (0ms)  (pid 68187)
+Compiled jquery.alerts.css  (0ms)  (pid 68187)
+Compiled jquery.tagsinput.css  (0ms)  (pid 68187)
+Compiled ui.spinner.css  (1ms)  (pid 68187)
+Compiled jquery.chosen.css  (7ms)  (pid 68187)
+Compiled fullcalendar.css  (0ms)  (pid 68187)
+Compiled roboto.css  (7ms)  (pid 68187)
+Compiled lato.css  (5ms)  (pid 68187)
+Compiled font-awesome.min.css  (62ms)  (pid 68187)
+Compiled style.default.css  (1871ms)  (pid 68187)
+Compiled session.css  (2125ms)  (pid 68187)
+Compiled jquery.js  (2ms)  (pid 68187)
+Compiled jquery_ujs.js  (0ms)  (pid 68187)
+Compiled jquery-migrate-1.1.1.min.js  (0ms)  (pid 68187)
+Compiled jquery-ui-1.10.3.min.js  (70ms)  (pid 68187)
+Compiled modernizr.min.js  (0ms)  (pid 68187)
+Compiled bootstrap.min.js  (66ms)  (pid 68187)
+Compiled jquery.cookie.js  (0ms)  (pid 68187)
+Compiled custom.js  (0ms)  (pid 68187)
+Compiled session.js  (956ms)  (pid 68187)
+Completed 200 OK in 4578ms (Views: 4523.1ms | ActiveRecord: 0.5ms)
+
+
+Started POST "/admins/sign_in" for 127.0.0.1 at 2013-08-01 03:16:54 -0300
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"8eV+AkuONRS5Ew+811IC5yWJiUmuHSjxfLFVFzctnGY=", "admin"=>{"email"=>"sebastian@paxos.com", "password"=>"[FILTERED]"}, "button"=>""}
+  [1m[36mAdmin Load (0.5ms)[0m  [1mSELECT "admins".* FROM "admins" WHERE "admins"."email" = 'sebastian@paxos.com' LIMIT 1[0m
+Redirected to http://localhost:3000/admin
+Completed 302 Found in 312ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2013-08-01 03:16:54 -0300
+Processing by Admin::EstudiosController#index as HTML
+  [1m[35mAdmin Load (0.2ms)[0m  SELECT "admins".* FROM "admins" WHERE "admins"."id" = 2 LIMIT 1
+  Rendered crud/_messages.slim (0.3ms)
+  Rendered crud/_filters.slim (1.8ms)
+  Rendered crud/_grid_title.slim (4.1ms)
+  Rendered admin/estudios/_header.slim (2.8ms)
+  [1m[36mEstudio Load (0.4ms)[0m  [1mSELECT "estudios".* FROM "estudios" ORDER BY estudios.nombre ASC LIMIT 9999 OFFSET 0[0m
+  Rendered collection (0.0ms)
+  Rendered crud/index.html.slim within layouts/application (118.1ms)
+Compiled responsive-tables.css  (0ms)  (pid 68187)
+Compiled manage.css  (0ms)  (pid 68187)
+Compiled application.css  (241ms)  (pid 68187)
+  Rendered layouts/_session_info.slim (4.6ms)
+  Rendered crud/_breadcrumb.slim (4.3ms)
+  Rendered crud/_resource_title.slim (3.4ms)
+  Rendered crud/_collection_actions.slim (3.1ms)
+Compiled jquery.uniform.min.js  (0ms)  (pid 68187)
+Compiled jquery.dataTables.min.js  (1ms)  (pid 68187)
+Compiled responsive-tables.js  (0ms)  (pid 68187)
+Compiled jquery.slimscroll.js  (0ms)  (pid 68187)
+Compiled chosen.jquery.min.js  (0ms)  (pid 68187)
+Compiled manage.js  (651ms)  (pid 68187)
+Compiled jquery_nested_form.js  (0ms)  (pid 68187)
+Compiled application.js  (1214ms)  (pid 68187)
+Completed 200 OK in 2455ms (Views: 2451.6ms | ActiveRecord: 0.6ms)
+Connecting to database specified by database.yml
+
+
+Started GET "/" for 127.0.0.1 at 2013-08-02 19:45:11 -0300
+Processing by ActoresController#index as HTML
+Completed 401 Unauthorized in 31ms
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2013-08-02 19:45:13 -0300
+Processing by Devise::SessionsController#new as HTML
+  Rendered crud/_messages.slim (5.0ms)
+  Rendered devise/sessions/new.html.slim within layouts/session (124.6ms)
+Completed 200 OK in 999ms (Views: 921.6ms | ActiveRecord: 0.7ms)
+
+
+Started POST "/users/sign_in" for 127.0.0.1 at 2013-08-02 19:45:38 -0300
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"8eV+AkuONRS5Ew+811IC5yWJiUmuHSjxfLFVFzctnGY=", "user"=>{"email"=>"sebastian@paxos.com", "password"=>"[FILTERED]"}, "button"=>""}
+  [1m[36mUser Load (9.6ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."email" = 'sebastian@paxos.com' LIMIT 1[0m
+Completed 401 Unauthorized in 44ms
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"8eV+AkuONRS5Ew+811IC5yWJiUmuHSjxfLFVFzctnGY=", "user"=>{"email"=>"sebastian@paxos.com", "password"=>"[FILTERED]"}, "button"=>""}
+  Rendered crud/_messages.slim (0.2ms)
+  Rendered devise/sessions/new.html.slim within layouts/session (2.9ms)
+Completed 200 OK in 575ms (Views: 487.1ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users/sign_in" for 127.0.0.1 at 2013-08-02 19:45:53 -0300
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"8eV+AkuONRS5Ew+811IC5yWJiUmuHSjxfLFVFzctnGY=", "user"=>{"email"=>"sebastian@paxos.com", "password"=>"[FILTERED]"}, "button"=>""}
+  [1m[35mUser Load (0.4ms)[0m  SELECT "users".* FROM "users" WHERE "users"."email" = 'sebastian@paxos.com' LIMIT 1
+Completed 401 Unauthorized in 3ms
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"8eV+AkuONRS5Ew+811IC5yWJiUmuHSjxfLFVFzctnGY=", "user"=>{"email"=>"sebastian@paxos.com", "password"=>"[FILTERED]"}, "button"=>""}
+  Rendered crud/_messages.slim (0.2ms)
+  Rendered devise/sessions/new.html.slim within layouts/session (2.6ms)
+Completed 200 OK in 560ms (Views: 479.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2013-08-02 19:45:58 -0300
+Processing by Admin::EstudiosController#index as HTML
+  [1m[36mAdmin Load (22.9ms)[0m  [1mSELECT "admins".* FROM "admins" WHERE "admins"."id" = 2 LIMIT 1[0m
+Completed 401 Unauthorized in 34ms
+
+
+Started GET "/admin" for 127.0.0.1 at 2013-08-02 19:45:59 -0300
+Processing by Admin::EstudiosController#index as HTML
+Completed 401 Unauthorized in 0ms
+
+
+Started GET "/admins/sign_in" for 127.0.0.1 at 2013-08-02 19:45:59 -0300
+Processing by Devise::SessionsController#new as HTML
+  Rendered crud/_messages.slim (0.4ms)
+  Rendered devise/sessions/new.html.slim within layouts/session (4.7ms)
+Completed 200 OK in 488ms (Views: 486.3ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/admins/sign_in" for 127.0.0.1 at 2013-08-02 19:46:02 -0300
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"8eV+AkuONRS5Ew+811IC5yWJiUmuHSjxfLFVFzctnGY=", "admin"=>{"email"=>"sebastian@paxos.com", "password"=>"[FILTERED]"}, "button"=>""}
+  [1m[35mAdmin Load (26.9ms)[0m  SELECT "admins".* FROM "admins" WHERE "admins"."email" = 'sebastian@paxos.com' LIMIT 1
+Redirected to http://localhost:3000/admin
+Completed 302 Found in 141ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2013-08-02 19:46:02 -0300
+Processing by Admin::EstudiosController#index as HTML
+  [1m[36mAdmin Load (0.3ms)[0m  [1mSELECT "admins".* FROM "admins" WHERE "admins"."id" = 2 LIMIT 1[0m
+  Rendered crud/_messages.slim (0.4ms)
+  Rendered crud/_filters.slim (4.1ms)
+  Rendered crud/_grid_title.slim (3.0ms)
+  Rendered admin/estudios/_header.slim (3.7ms)
+  [1m[35mEstudio Load (0.7ms)[0m  SELECT "estudios".* FROM "estudios" ORDER BY estudios.nombre ASC LIMIT 9999 OFFSET 0
+  Rendered collection (0.0ms)
+  Rendered crud/index.html.slim within layouts/application (39.4ms)
+  Rendered layouts/_session_info.slim (4.9ms)
+  Rendered crud/_breadcrumb.slim (5.4ms)
+  Rendered crud/_resource_title.slim (3.3ms)
+  Rendered crud/_collection_actions.slim (4.3ms)
+Completed 200 OK in 857ms (Views: 852.1ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/admin/estudios" for 127.0.0.1 at 2013-08-02 19:46:07 -0300
+Processing by Admin::EstudiosController#index as HTML
+  [1m[36mAdmin Load (0.2ms)[0m  [1mSELECT "admins".* FROM "admins" WHERE "admins"."id" = 2 LIMIT 1[0m
+  Rendered crud/_messages.slim (0.1ms)
+  Rendered crud/_filters.slim (0.0ms)
+  Rendered crud/_grid_title.slim (0.2ms)
+  Rendered admin/estudios/_header.slim (0.0ms)
+  [1m[35mEstudio Load (0.3ms)[0m  SELECT "estudios".* FROM "estudios" ORDER BY estudios.nombre ASC LIMIT 9999 OFFSET 0
+  Rendered collection (0.0ms)
+  Rendered crud/index.html.slim within layouts/application (11.1ms)
+  Rendered layouts/_session_info.slim (1.2ms)
+  Rendered crud/_breadcrumb.slim (0.6ms)
+  Rendered crud/_resource_title.slim (0.1ms)
+  Rendered crud/_collection_actions.slim (0.4ms)
+Completed 200 OK in 571ms (Views: 567.5ms | ActiveRecord: 0.5ms)
+Connecting to database specified by database.yml
+
+
+Started GET "/" for 127.0.0.1 at 2014-06-25 10:31:33 -0300
+Processing by ActoresController#index as HTML
+Completed 401 Unauthorized in 33ms
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-06-25 10:31:35 -0300
+Processing by Devise::SessionsController#new as HTML
+  Rendered crud/_messages.slim (38.2ms)
+  Rendered devise/sessions/new.html.slim within layouts/session (168.8ms)
+Completed 200 OK in 1299ms (Views: 1264.0ms | ActiveRecord: 0.6ms)
+
+
+Started POST "/users/sign_in" for 127.0.0.1 at 2014-06-25 10:31:42 -0300
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"x+Qi6n3f1tvZXhWa0DWrZXLl+Mf8pu/NPWq/F7sxFuw=", "user"=>{"email"=>"sebastianponce@live.com.ar", "password"=>"[FILTERED]"}, "button"=>""}
+  [1m[36mUser Load (10.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."email" = 'sebastianponce@live.com.ar' LIMIT 1[0m
+Completed 401 Unauthorized in 32ms
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"x+Qi6n3f1tvZXhWa0DWrZXLl+Mf8pu/NPWq/F7sxFuw=", "user"=>{"email"=>"sebastianponce@live.com.ar", "password"=>"[FILTERED]"}, "button"=>""}
+  Rendered crud/_messages.slim (0.2ms)
+  Rendered devise/sessions/new.html.slim within layouts/session (2.4ms)
+Completed 200 OK in 520ms (Views: 411.0ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users/sign_in" for 127.0.0.1 at 2014-06-25 10:32:54 -0300
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"x+Qi6n3f1tvZXhWa0DWrZXLl+Mf8pu/NPWq/F7sxFuw=", "user"=>{"email"=>"sebastian@paxos.com", "password"=>"[FILTERED]"}, "button"=>""}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."email" = 'sebastian@paxos.com' LIMIT 1
+Completed 401 Unauthorized in 2ms
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"x+Qi6n3f1tvZXhWa0DWrZXLl+Mf8pu/NPWq/F7sxFuw=", "user"=>{"email"=>"sebastian@paxos.com", "password"=>"[FILTERED]"}, "button"=>""}
+  Rendered crud/_messages.slim (0.4ms)
+  Rendered devise/sessions/new.html.slim within layouts/session (4.8ms)
+Completed 200 OK in 491ms (Views: 413.9ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users/sign_in" for 127.0.0.1 at 2014-06-25 10:33:03 -0300
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"x+Qi6n3f1tvZXhWa0DWrZXLl+Mf8pu/NPWq/F7sxFuw=", "user"=>{"email"=>"sebastian@paxos.com", "password"=>"[FILTERED]"}, "button"=>""}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."email" = 'sebastian@paxos.com' LIMIT 1[0m
+Completed 401 Unauthorized in 2ms
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"x+Qi6n3f1tvZXhWa0DWrZXLl+Mf8pu/NPWq/F7sxFuw=", "user"=>{"email"=>"sebastian@paxos.com", "password"=>"[FILTERED]"}, "button"=>""}
+  Rendered crud/_messages.slim (0.2ms)
+  Rendered devise/sessions/new.html.slim within layouts/session (2.7ms)
+Completed 200 OK in 509ms (Views: 432.1ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users/sign_in" for 127.0.0.1 at 2014-06-25 10:33:13 -0300
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"x+Qi6n3f1tvZXhWa0DWrZXLl+Mf8pu/NPWq/F7sxFuw=", "user"=>{"email"=>"agustin@paxos.com", "password"=>"[FILTERED]"}, "button"=>""}
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE "users"."email" = 'agustin@paxos.com' LIMIT 1
+Completed 401 Unauthorized in 3ms
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"x+Qi6n3f1tvZXhWa0DWrZXLl+Mf8pu/NPWq/F7sxFuw=", "user"=>{"email"=>"agustin@paxos.com", "password"=>"[FILTERED]"}, "button"=>""}
+  Rendered crud/_messages.slim (0.2ms)
+  Rendered devise/sessions/new.html.slim within layouts/session (2.8ms)
+Completed 200 OK in 526ms (Views: 447.7ms | ActiveRecord: 0.0ms)

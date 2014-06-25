@@ -1,0 +1,40 @@
+Paxos
+========================
+
+Instalacion
+
+- Instalar sqlite
+
+- Instalar rvm
+  https://rvm.io/rvm/install/
+
+- Instalar ruby 1.9.3
+
+- clonar el proyecto
+  git@gnium.unfuddle.com:gnium/paxos.git
+
+- aplicar gemset
+  cd paxos
+  cp sample.rvmrc .rvmrc
+  cd .
+  en este punto te salen unos mensajes, le pones que si "Y"
+
+- Configuracion de la db
+  cp config/database.yml.sample config/database.yml
+
+- Instalar las gemas en el gemset
+  bundle install
+
+
+- Correr las migraciones
+  bundle exec rake db:create
+  bundle exec rake db:migrate
+  bundle exec rake db:seed
+
+
+usuarios:
+sebastian@paxos.com
+Seba159753
+
+agustin@paxos.com
+Agu159753

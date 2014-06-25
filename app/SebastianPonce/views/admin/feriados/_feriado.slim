@@ -1,0 +1,4 @@
+tr
+  td= feriado.fecha.strftime("%A %d de %B de %Y")
+  td= feriado.nombre
+  td.actions= render "edit_destroy", row: feriado

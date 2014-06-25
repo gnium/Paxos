@@ -1,0 +1,46 @@
+doctype html
+html
+  head
+    title= content_for?(:title) ? yield(:title) : "Paxos"
+    meta name="viewport" content="width=device-width, initial-scale=1.0"
+
+    meta charset="UTF-8"
+    meta name="description" content="#{content_for?(:description) ? yield(:description) : "Paxos"}"
+    = stylesheet_link_tag "application", media: "all"
+    = csrf_meta_tags
+    = yield(:head)
+  body
+    #mainwrapper.mainwrapper
+      .header
+        .logo
+          = link_to root_path do
+            = image_tag "logo.png"
+        .headerinner
+          ul.headmenu
+            li.odd
+              a href="#"
+                span.count 4
+                span.head-icon.head-message
+                span.headmenu-label Mensajes
+            li.right= render "layouts/session_info"
+      .leftpanel
+        .leftmenu= render_navigation renderer: :bootstrap, context: @current_context
+      .rightpanel
+        = render "breadcrumb"
+        .pageheader
+          .pageicon
+            span class=t("#{controller_name}.icon")
+          .pagetitle
+            h1= render "resource_title"
+          - if action_name == "index"
+            .searchbar= render "collection_actions"
+        .maincontent
+          .maincontentinner
+            == yield
+            .footer
+              .footer-left
+                span= "Paxos #{Date.today.year}"
+              .footer-right
+                span Desarrollo por: <a href="http://paxos.com/">Gnium</a>
+
+    = javascript_include_tag "application"

@@ -1,0 +1,21 @@
+= devise_error_messages!
+= simple_form_for resource, as: resource_name, url: invitation_path(resource_name), html: { method: :put, class: "form-vertical" } do |f|
+  = f.hidden_field :invitation_token
+  p &nbsp;
+  .control-group
+    .controls
+      .input-prepend
+        span.add-on
+          i.icon-lock
+        = f.password_field :password, placeholder: "Contraseña"
+
+  .control-group
+    .controls
+      .input-prepend
+        span.add-on
+          i.icon-lock
+        = f.password_field :password_confirmation, placeholder: "Confirmacion"
+
+  .form-actions
+    span.pull-right
+      = f.button :submit, t("devise.invitations.edit.submit_button"), class: "btn btn-inverse"

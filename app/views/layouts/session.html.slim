@@ -1,0 +1,21 @@
+doctype html
+html
+  head
+    meta name="viewport" content="width=device-width, initial-scale=1.0"
+    title= content_for?(:title) ? yield(:title) : "Paxos"
+    meta charset="UTF-8"
+
+    meta name="description" content="#{content_for?(:description) ? yield(:description) : "Paxos"}"
+    = stylesheet_link_tag "session", media: "all"
+    = csrf_meta_tags
+    == yield(:head)
+  body.loginpage
+    .loginpanel
+      .loginpanelinner
+        .logo.animate0.bounceIn
+          = image_tag "logo.png"
+        == yield
+    .loginfooter
+      p= "Paxos #{Date.today.year}"
+
+    = javascript_include_tag "session"

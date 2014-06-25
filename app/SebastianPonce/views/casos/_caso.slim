@@ -1,0 +1,11 @@
+tr
+  td= caso.actores_nombre
+  td= caso.tipo_proceso_nombre
+  td= caso.instancia_nombre
+  td= caso.caratula
+  td= caso.fecha_inicio
+  td= caso.fecha_fin
+  td.actions
+    = link_to "Consultas", caso_consultas_path(caso), class: "btn btn-info btn-small"
+    |  
+    = render "edit_destroy", row: caso

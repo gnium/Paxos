@@ -1,0 +1,11 @@
+= simple_form_for [parent, resource], html: { class: "stdform" } do |f|
+  .widget
+    h4.widgettitle Información de la consulta
+    .widgetcontent
+      = f.input :fecha, as: :date, input_html: { class: "input-small" }
+      = f.input :titulo, input_html: { class: "input-xxlarge" }
+      = f.input :descripcion, input_html: { class: "input-xxlarge" }
+      = f.input :fecha_presentacion, as: :date, input_html: { class: "input-small" }
+      = f.input :con_vencimiento
+
+      .stdformbutton= render "resource_actions", f: f

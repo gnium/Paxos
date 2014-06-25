@@ -1,0 +1,7 @@
+tr
+  td= documento.actor_nombre
+  td= documento.descripcion
+  td= documento.fecha_entrega
+  td= documento.fecha_devolucion
+  td= documento.ubicacion_fisica
+  td.actions= render "edit_destroy", row: documento

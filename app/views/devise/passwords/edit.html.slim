@@ -1,0 +1,13 @@
+= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
+  p &nbsp;
+  = f.error_notification
+
+  = f.hidden_field :reset_password_token
+  = f.full_error :reset_password_token
+
+  .inputwrapper.animate1.bounceIn
+    = f.password_field :password, placeholder: "Nueva contraseña", required: true, autofocus: true
+  .inputwrapper.animate2.bounceIn
+    = f.password_field :password_confirmation, placeholder: "Confirmación", required: true
+  .inputwrapper.animate3.bounceIn
+    = f.button :button, "Cambiar mi contraseña", class: nil

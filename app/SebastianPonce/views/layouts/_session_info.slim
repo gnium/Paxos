@@ -1,0 +1,14 @@
+.userloggedinfo
+  .userinfo
+    - if admin_signed_in?
+      ul
+        li= link_to current_admin.email, "#"
+        li= link_to "Calculadora de dias", "#calc", data: { toggle: "modal" }
+        li= link_to "Salir", destroy_admin_session_path, method: :delete
+
+    - if user_signed_in?
+      ul
+        li= link_to %(<i class="icon icon-user"></i> <span class="text">#{current_user.email}</span>).html_safe, "#"
+        li= link_to %(<i class="icon icon-ok"></i> <span class="text">Cuenta Corriente</span> <span class="label #{@current_estudio.cuenta_corriente > 0 ? 'label-success' : 'label-important'}">#{@current_estudio.cuenta_corriente}</span></a>).html_safe, "#"
+        li= link_to '<i class="icon icon-calendar"></i> <span class="text">Calculadora de dias</span></a>'.html_safe, "#calc", data: { toggle: "modal" }
+        li= link_to %(<i class="icon icon-share-alt"></i> <span class="text">Salir</span>).html_safe, destroy_user_session_path, method: :delete

@@ -1,0 +1,17 @@
+es:
+  devise:
+    invitations:
+      send_instructions: 'Un correo de invitacion ha sido enviado a %{email}.'
+      invitation_token_invalid: 'El codigo de invitacion no es valido!'
+      updated: 'La contraseña ha sido creada. Estas conectado.'
+      no_invitations_remaining: "No quedan invitaciones"
+      invitation_removed: 'Tu invitación fue removida.'
+      new:
+        header: "Enviar invitación"
+        submit_button: "Enviar una invitación"
+      edit:
+        header: "Ingresa tu contraseña"
+        submit_button: "Configurar mi contraseña"
+    mailer:
+      invitation_instructions:
+        subject: 'Instrucciones para tu invitacion'

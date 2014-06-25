@@ -1,0 +1,14 @@
+= simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: { id: "login" }) do |f|
+  .inputwrapper.login-alert
+    = render 'crud/messages'
+    .alert.alert-error Invalid username or password
+  .inputwrapper.animate1.bounceIn
+    = f.text_field :email, placeholder: "Email", autofocus: true
+  .inputwrapper.animate2.bounceIn
+    = f.password_field :password, placeholder: "Contraseña"
+  .inputwrapper.animate3.bounceIn
+    = f.button :button, "Ingresar", class: nil
+  .inputwrapper.animate4.bounceIn
+    - if devise_mapping.recoverable?
+      .pull-right
+        = link_to "¿Olvidó su contraseña?", new_password_path(resource_name)

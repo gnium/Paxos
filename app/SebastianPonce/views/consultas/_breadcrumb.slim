@@ -1,0 +1,8 @@
+ul.breadcrumbs
+  li
+    = link_to %(<i class="icon-home"></i> #{@current_estudio.nombre}).html_safe, root_path
+    span.separator
+  li
+    = link_to parent.caratula, edit_caso_path(parent)
+    span.separator
+  = link_to t("#{controller_name}.#{action_name}"), collection_path, class: "current"
